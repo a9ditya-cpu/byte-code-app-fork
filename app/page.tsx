@@ -22,6 +22,5 @@ export default function Home() {
         </div>
       </div>
     </div>
-    //new update: me adding a message
   );
 }
