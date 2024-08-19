@@ -1,78 +1,71 @@
 "use client";
-import React, { useState } from "react";
-import { HoveredLink, Menu, MenuItem, ProductItem } from "@/components/ui/navbar-menu";
+import React from "react";
+import { useRouter } from "next/navigation"; 
 import { ShootingStars } from "@/components/ui/shooting-stars";
 import { StarsBackground } from "@/components/ui/stars-background";
-import { cn } from "@/lib/utils";
 
-export default function NavbarDemo() {
+export default function Home() {
+  const router = useRouter();
+
+  const handleClick = () => {
+    console.log("Button clicked");
+    router.push("/spam");
+  };
+
   return (
-    <>
-    <div className="h-screen bg-neutral-900 flex flex-col items-center justify-center relative w-full bg-cover">
-      <h2 className="relative flex-col md:flex-row z-10 text-3xl md:text-5xl md:leading-tight max-w-5xl mx-auto text-center tracking-tight font-medium bg-clip-text text-transparent bg-gradient-to-b from-neutral-800 via-white to-white flex items-center gap-2 md:gap-8">
+    <div className="h-screen bg-neutral-900 flex flex-col items-center justify-center relative w-full bg-cover z-10">
+      {/* Top-right button */}
+      <div className="absolute top-4 right-4 z-30">
+        <button 
+          className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50"
+          onClick={() => window.open("https://discord.gg/GCQZMuSu", "_blank")}
+        >
+          <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+          <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+            Join our Discord
+          </span>
+        </button>
+      </div>
+      
+      <h2 className="relative flex-col md:flex-row z-20 text-3xl md:text-5xl md:leading-tight max-w-5xl mx-auto text-center tracking-tight font-medium bg-clip-text text-transparent bg-gradient-to-b from-neutral-800 via-white to-white flex items-center gap-2 md:gap-8">
         <span>@ByteCode Official Website</span>
         <span className="text-white text-lg font-thin">x</span>
         <span>Coming Soon !!</span>
       </h2>
-      <ShootingStars />
-      <StarsBackground />
-    </div>
-    </>
-  );
-}
+      
+      {/* Added margin-top to create gap */}
+      <div className="flex items-center justify-center bg-transparent z-30 mt-8"> 
+        <button
+          onClick={handleClick}
+          className="relative p-2 rounded-lg border-4 border-transparent bg-yellow-500 hover:bg-red-500 overflow-hidden animate-blink"
+          title="Click at Your Own Risk">
+          <div className="z-10 font-bold text-lg transition-colors duration-500 ease-in-out">
+            ⚠️ DANGER! ⚠️
+          </div>
+        </button>
+      </div>
 
-function Navbar({ className }: { className?: string }) {
-  const [active, setActive] = useState<string | null>(null);
-  return (
-    <div
-      className={cn("fixed top-10 inset-x-0 max-w-2xl mx-auto z-50", className)}
-    >
-      <Menu setActive={setActive}>
-        <MenuItem setActive={setActive} active={active} item="Services">
-          <div className="flex flex-col space-y-4 text-sm">
-            <HoveredLink href="/web-dev">Web Development</HoveredLink>
-            <HoveredLink href="/interface-design">Interface Design</HoveredLink>
-            <HoveredLink href="/seo">Search Engine Optimization</HoveredLink>
-            <HoveredLink href="/branding">Branding</HoveredLink>
-          </div>
-        </MenuItem>
-        <MenuItem setActive={setActive} active={active} item="Products">
-          <div className="  text-sm grid grid-cols-2 gap-10 p-4">
-            <ProductItem
-              title="Algochurn"
-              href="https://algochurn.com"
-              src="https://assets.aceternity.com/demos/algochurn.webp"
-              description="Prepare for tech interviews like never before."
-            />
-            <ProductItem
-              title="Tailwind Master Kit"
-              href="https://tailwindmasterkit.com"
-              src="https://assets.aceternity.com/demos/tailwindmasterkit.webp"
-              description="Production ready Tailwind css components for your next project"
-            />
-            <ProductItem
-              title="Moonbeam"
-              href="https://gomoonbeam.com"
-              src="https://assets.aceternity.com/demos/Screenshot+2024-02-21+at+11.51.31%E2%80%AFPM.png"
-              description="Never write from scratch again. Go from idea to blog in minutes."
-            />
-            <ProductItem
-              title="Rogue"
-              href="https://userogue.com"
-              src="https://assets.aceternity.com/demos/Screenshot+2024-02-21+at+11.47.07%E2%80%AFPM.png"
-              description="Respond to government RFPs, RFIs and RFQs 10x faster using AI"
-            />
-          </div>
-        </MenuItem>
-        <MenuItem setActive={setActive} active={active} item="Pricing">
-          <div className="flex flex-col space-y-4 text-sm">
-            <HoveredLink href="/hobby">Hobby</HoveredLink>
-            <HoveredLink href="/individual">Individual</HoveredLink>
-            <HoveredLink href="/team">Team</HoveredLink>
-            <HoveredLink href="/enterprise">Enterprise</HoveredLink>
-          </div>
-        </MenuItem>
-      </Menu>
+      <style jsx>{`
+        @keyframes blink {
+          0%, 100% {
+            background-color: red;
+            color: white;
+          }
+          50% {
+            background-color: yellow;
+            color: black;
+          }
+        }
+
+        .animate-blink {
+          animation: blink 1s infinite;
+        }
+      `}</style>
+      
+      <div className="absolute inset-0 z-0">
+        <ShootingStars />
+        <StarsBackground />
+      </div>
     </div>
   );
 }
